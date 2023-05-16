@@ -11,3 +11,43 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+body {
+  background-color: #ffffff;
+  color: white;
+}
+.App {
+  background-color: 	rgba(5, 5, 5, 0.6);
+  margin: 5px auto;
+  max-width: 800px;
+  height: 700px;
+  border-radius: 20px;
+}
+
+h1 {
+  padding: 20px;
+  text-decoration: underline;
+}
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 3fr));
+  grid-gap: 10px;
+  
+}
+
+li {
+  width: 175px;
+  height:100px;
+  padding: 20px;
+  border: solid thin;
+  border-radius: 20px;
+  list-style-type: none;
+  cursor: pointer;
+  
+}
+
+li:hover {
+  background-color:rgba(255,255,255,0.10)
+  
+}
