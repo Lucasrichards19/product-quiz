@@ -1,190 +1,159 @@
-import React, { useState } from "react";
-//import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-export function App() {
+const Quiz = () => {
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [selectedAnswers, setSelectedAnswers] = useState(Array(3).fill(''));
+    const [matchingProducts, setMatchingProducts] = useState([]);
 
-  //properties
+    const questions = [
+        {
+            question: 'What type of lubricant do you prefer?',
+            answers: ['Water Based', 'Silicone Based', 'Hybrid (Water and Silicone Combined)', 'Flavored'],
+        },
+        {
+            question: 'What experience are you looking for in your lubricant?',
+            answers: ['Natural Feel', 'Long Lasting', 'Extra Thick & Rich', 'Cooling Sensation', 'Warming Sensation'],
+        },
+        {
+            question: 'What features are important to you?',
+            answers: ['Good for Silicone Toys', 'Glycerin & Paraben Free', 'Easy to Clean & Non-Staining', 'Condom & Latex Safe', 'Underwater Play'],
+        },
+    ];
 
-  const [showFinalResults, setFinalResults] = useState(false);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [finalResults, setFinalResultsState] = useState([true,true,true]);
+    const products = [
+        {
+            name: 'Glide',
+            preferences: ['Water Based', 'Condom/Latex Safe', 'For Sensitive Skin', 'Hypoallergenic', 'Long Lasting', 'Easy to Clean', 'Non-Staining', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)', 'Anal'],
+        },
+        {
+            name: 'Xtreme',
+            preferences: [ 'Water Based', 'Condom/Latex Safe', 'For Sensitive Skin', 'Hypoallergenic', 'Long Lasting', 'Easy to Clean', 'Non-Staining', 'Extra Thick', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)', 'Anal'],
+        },
+        {
+            name: 'Pleasure',
+            preferences: ['Water Based', 'Added Sensation', 'Condom/Latex Safe', 'Long Lasting', 'Easy to Clean', 'Non-Staining', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)'],
+        },
+        {
+            name: 'Sensation',
+            preferences: [ 'Water Based', 'Added Sensation', 'Condom/Latex Safe', 'Long Lasting', 'Easy to Clean', 'Non-Staining', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)'],
+        },
+        {
+            name: 'Jelly',
+            preferences: [ 'Water Based', 'Condom/Latex Safe', 'For Sensitive Skin', 'Hypoallergenic', 'Long Lasting', 'Easy to Clean', 'Non-Staining', 'Extra Thick', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)', 'Anal'],
+        },
+        {
+            name: 'Free',
+            preferences: [ 'Water Based', 'Condom/Latex Safe', 'For Sensitive Skin', 'Hypoallergenic', 'Long Lasting', 'Easy to Clean', 'Non-Staining', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)', 'Anal'],
+        },
+        {
+            name: 'TN',
+            preferences: [ 'Water Based', 'Condom/Latex Safe', 'Hypoallergenic', 'Long Lasting', 'Easy to Clean', 'Non-Staining', 'Extra Thick', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)', 'Anal'],
+        },
+        {
+            name: 'Hero',
+            preferences: [ 'Water Based', 'Condom/Latex Safe', 'Hypoallergenic', 'Long Lasting', 'Easy to Clean', 'Non-Staining', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)', 'Anal'],
+        },
+        {
+            name: 'Hero HR',
+            preferences: [ 'Water Based', 'Added Sensation', 'Condom/Latex Safe', 'Long Lasting', 'Easy to Clean', 'Non-Staining', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)'],
+        },
+        {
+            name: 'Frutopia',
+            preferences: [ 'Water Based', 'Flavored', 'Condom/Latex Safe', 'Easy to Clean', 'Non-Staining', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)', 'Oral Sex'],
+        },
+        {
+            name: '3Some',
+            preferences: [ 'Flavored', 'Body Topping', 'Added Sensation', 'Condom/Latex Safe', 'Easy to Clean', 'Non-Staining', 'Play with Partner(s)', 'Oral Sex', 'Massage'],
+        },
+        {
+            name: 'Silk',
+            preferences: [ 'Hybrid (Water and Silicone Combined)', 'Condom/Latex Safe', 'Long Lasting', 'Easy to Clean', 'Non-Staining', 'Silicone Toy Friendly', 'Masturbation / Self Play', 'Play with Partner(s)', 'Anal'],
+        },
+        {
+            name: 'Millennium',
+            preferences: [ 'Silicone Based', 'Condom/Latex Safe', 'Hypoallergenic', 'Waterproof', 'Long Lasting', 'Masturbation / Self Play', 'Play with Partner(s)', 'Anal', 'Massage'],
+        },
 
-  const questions = [
-    {
-      text: "What is your base preferece?",
-      options: [
-        { id: 0, text: "Silicone", answer: false },
-        { id: 1, text: "Water Based", answer: true },
-        { id: 2, text: "No preference", answer: null },
-      ]
-    },
-    {
-      text: "Do you like flavor?",
-      options: [
-        { id: 0, text: "No", answer: false },
-        { id: 1, text: "Yes", answer: true },
-        { id: 2, text: "No preference", answer: null }
-      ]
-    },
-    {
-      text: "Do you like it thick?",
-      options: [
-        { id: 0, text: "No", answer: false },
-        { id: 1, text: "Yes", answer: true },
-        { id: 2, text: "No preference", answer: null }
-      ]
-    }
-  ];
+        {
+            name: 'Velvet',
+            preferences: [ 'Silicone Based', 'Condom/Latex Safe', 'Hypoallergenic', 'Waterproof', 'Long Lasting', 'Masturbation / Self Play', 'Play with Partner(s)', 'Anal', 'Massage'],
+        },
+        {
+            name: 'BackSlide',
+            preferences: [ 'Silicone Based', 'Condom/Latex Safe', 'Hypoallergenic', 'Waterproof', 'Long Lasting', 'Masturbation / Self Play', 'Play with Partner(s)', 'Anal'],
+        },
+        
+    ];
 
-  const formulas = [
-    {
-      id: 0, title: "Glide", properties: {
-        answer1: true,
-        answer2: false,
-        answer3: false
-      }
-    },
-
-    {
-      id: 1, title: "T-Glide", properties: {
-        answer1: true,
-        answer2: false,
-        answer3: true
-      }
-    },
-
-    {
-      id: 2, title: "Pleasure", properties: {
-        answer1: true,
-        answer2: false,
-        answer3: false
-      }
-    },
-
-    {
-      id: 3, title: "Millennium", properties: {
-        answer1: false,
-        answer2: false,
-        answer3: false
-      }
-    },
-
-    {
-      id: 4, title: "Frutopia", properties: {
-        answer1: true,
-        answer2: true,
-        answer3: false
-      }
-    },
-
-    {
-      id: 5, title: "Velvet", properties: {
-        answer1: false,
-        answer2: false,
-        answer3: true
-      }
-    },
-
-    {
-      id: 6, title: "Silk", properties: {
-        answer1: false,
-        answer2: false,
-        answer3: false
-      }
-    },
-
-    {
-      id: 6, title: "3Some", properties: {
-        answer1: true,
-        answer2: true,
-        answer3: true
-      }
-    },
-  ];
-
-
-  //helper functions
-
-  const optionClicked = (answer) => {
-    if(currentQuestion === 0 ){
-      setFinalResultsState([answer, null, null]);
-    }
-    else if(currentQuestion === 1){
-      setFinalResultsState([finalResults[0], answer, null]);
-    }
-    else if(currentQuestion === 2){
-      setFinalResultsState([finalResults[0], finalResults[1], answer]);
-    }
-    if (currentQuestion + 1 <questions.length){
-      setCurrentQuestion(currentQuestion +1);
-    } else {
-      setFinalResults(true)
-    }
+    const handleAnswerSelect = (answer) => {
+        setSelectedAnswers((prevSelectedAnswers) => {
+            const updatedAnswers = [...prevSelectedAnswers];
+            updatedAnswers[currentQuestion] = answer;
+            setCurrentQuestion((prevQuestion) => prevQuestion + 1);
+            return updatedAnswers;
+        });
+    };
 
     
-  };
 
-  const filteredFormulas = formulas.filter((formula) => {
+    const handleShowResults = () => {
+        const matching = products
+            .map((product) => {
+                const { preferences } = product;
+                const matchCount = preferences.filter((preference) => selectedAnswers.includes(preference)).length;
+                return { ...product, matchCount };
+            })
+            .filter((product) => product.matchCount > 0);
 
-    if (finalResults[0]===null){
-      formula.properties.answer1 = null
-    }
-    if (finalResults[1]===null){
-      formula.properties.answer2 = null
-    }
-    if (finalResults[2]===null){
-      formula.properties.answer3 = null
-    }
-    // Check if the formula's properties match the user's answers
+        matching.sort((a, b) => b.matchCount - a.matchCount);
+        setMatchingProducts(matching);
+    };
+
     return (
+        <div className='App'>
+            {currentQuestion < questions.length ? (
+                <div>
+                    <h2>{questions[currentQuestion].question}</h2>
+                    <ul>
+                        {questions[currentQuestion].answers.map((answer, index) => (
+                            <li key={index} 
+                                className={`answer-button ${selectedAnswers[currentQuestion] === answer ? 'selected' : ''}`}
+                                onClick={() => handleAnswerSelect(answer)} 
+                            >
+                                {answer}
 
-      formula.properties.answer1 === finalResults[0] &&
-      formula.properties.answer2 === finalResults[1] &&
-      formula.properties.answer3 === finalResults[2]
+                            </li>
+                        ))}
+                    </ul>
+                    
+                </div>
+            ) : (
+                <div>
+                    <h2>Quiz Completed!</h2>
+                    <h3>Selected answers:</h3>
+                    <ul>
+                        {selectedAnswers.map((answer, index) => (
+                            <li key={index}>{answer}</li>
+                        ))}
+                    </ul>
+                    <button className='next' onClick={handleShowResults}>Show Results</button>
+                    {matchingProducts.length > 0 && (
+                        <div>
+                            <h3 >Matching Products:</h3>
+                            <ul>
+                                {matchingProducts.map((product, index) => (
+                                    <li key={index}>
+                                        {product.name} <span className='match'> Matched Preferences: {product.matchCount}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
     );
-  });
-  
+};
 
-  return (
-    <div className="App">
+export default Quiz;
 
-      {showFinalResults ?
-        <div>
-          <h1>Product Quiz</h1>
-          <h2>Final Results</h2>
-          <ul>
-            {filteredFormulas.map((formula) => (
-              <li key={formula.id}>{formula.title}</li>
-            ))}
-          </ul>
-        </div>
-
-
-        :
-
-
-        <div>
-          <h1>Product Quiz</h1>
-          <div className="progress-container">
-            <h3 className="progress-text">Question {currentQuestion + 1}</h3>
-          </div>
-
-          <h2 className="question-text"> {questions[currentQuestion].text} </h2>
-          <ul>
-            {questions[currentQuestion].options.map((option) => {
-              return (
-                <li onClick={() => optionClicked(option.answer)} key={option.id}>{option.text}</li>
-              );
-            })}
-
-          </ul>
-        </div>
-
-
-      }
-    </div>
-  );
-}
-
-export default App;
